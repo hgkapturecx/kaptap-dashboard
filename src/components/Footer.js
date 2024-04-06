@@ -14,7 +14,6 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
 import ReactLogo from "../assets/img/technologies/react-logo.svg";
 import LaravelLogo from "../assets/img/technologies/laravel-logo.svg";
-import GitHubButton from "react-github-btn";
 export default (props) => {
   const currentYear = moment().get("year");
   const showSettings = props.showSettings;
@@ -37,22 +36,6 @@ export default (props) => {
                 toggleSettings(false);
               }}
             />
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <p className="m-0 mb-1 me-3 fs-7">
-                Made with open source{" "}
-                <span role="img" aria-label="gratitude">
-                  💙
-                </span>
-              </p>
-              <GitHubButton
-                href="https://github.com/themesberg/volt-react-dashboard"
-                data-size="large"
-                data-show-count="true"
-                aria-label="Star themesberg/volt-react-dashboard on GitHub"
-              >
-                Star
-              </GitHubButton>
-            </div>
             <Button
               href="https://themesberg.com/product/dashboard/volt-react"
               target="_blank"
