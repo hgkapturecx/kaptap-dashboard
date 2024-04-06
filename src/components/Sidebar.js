@@ -8,6 +8,7 @@ import {
   faHandHoldingUsd,
   faSignOutAlt,
   faTimes,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -170,8 +171,14 @@ export default (props = {}) => {
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem
                 title="KapTap"
-                link={Routes.Presentation.path}
+                // link={Routes.Presentation.path}
                 image={ReactHero}
+              />
+
+              <NavItem
+                title="Configuration"
+                icon={faCog}
+                link={Routes.Presentation.path}
               />
 
               <NavItem
