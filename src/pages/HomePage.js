@@ -32,7 +32,6 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => (
         <>
-          {" "}
           <Preloader show={loaded ? false : true} /> <Component {...props} />{" "}
         </>
       )}

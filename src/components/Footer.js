@@ -10,7 +10,7 @@ import {
   Button,
 } from "@themesberg/react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCogs, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
 import ReactLogo from "../assets/img/technologies/react-logo.svg";
 import LaravelLogo from "../assets/img/technologies/laravel-logo.svg";
@@ -120,18 +120,7 @@ export default (props) => {
           </Card.Body>
         </Card>
       ) : (
-        <Card
-          className="theme-settings theme-settings-expand"
-          onClick={() => {
-            toggleSettings(true);
-          }}
-        >
-          <Card.Body className="p-3 py-2">
-            <span className="fw-bold h6">
-              <FontAwesomeIcon icon={faCogs} className="me-1 fs-7" /> Settings
-            </span>
-          </Card.Body>
-        </Card>
+        ""
       )}
       <footer className="footer section py-5">
         <Row>
@@ -139,34 +128,40 @@ export default (props) => {
             <p className="mb-0 text-center text-xl-left">
               Copyright © 2019-{`${currentYear} `}
               <Card.Link
-                href="https://themesberg.com"
+                href="https://www.kapture.cx/"
                 target="_blank"
                 className="text-blue text-decoration-none fw-normal"
               >
-                Themesberg
+                kaptap
               </Card.Link>
             </p>
           </Col>
           <Col xs={12} lg={6}>
             <ul className="list-inline list-group-flush list-group-borderless text-center text-xl-right mb-0">
               <li className="list-inline-item px-0 px-sm-2">
-                <Card.Link href="https://themesberg.com/about" target="_blank">
+                <Card.Link
+                  href="https://www.kapture.cx/about-us/"
+                  target="_blank"
+                >
                   About
                 </Card.Link>
               </li>
               <li className="list-inline-item px-0 px-sm-2">
-                <Card.Link href="https://themesberg.com/themes" target="_blank">
-                  Themes
+                <Card.Link
+                  href="https://www.kapture.cx/support/"
+                  target="_blank"
+                >
+                  Support
                 </Card.Link>
               </li>
               <li className="list-inline-item px-0 px-sm-2">
-                <Card.Link href="https://themesberg.com/blog" target="_blank">
+                <Card.Link href="https://www.kapture.cx/blog/" target="_blank">
                   Blog
                 </Card.Link>
               </li>
               <li className="list-inline-item px-0 px-sm-2">
                 <Card.Link
-                  href="https://themesberg.com/contact"
+                  href="https://www.kapture.cx/contact/"
                   target="_blank"
                 >
                   Contact
