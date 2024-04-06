@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Routes } from "../routes";
 
 // pages
-import DashboardOverview from "./dashboard/DashboardOverview";
+// import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
@@ -18,6 +18,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
+import NewConfigurationButton from "./dashboard/DashboardOverview";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -88,7 +89,7 @@ export default () => (
     <RouteWithSidebar
       exact
       path={Routes.Presentation.path}
-      component={DashboardOverview}
+      component={NewConfigurationButton}
     />
 
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
@@ -115,11 +116,11 @@ export default () => (
     />
 
     {/* pages */}
-    <RouteWithSidebar
+    {/* <RouteWithSidebar
       exact
       path={Routes.DashboardOverview.path}
       component={DashboardOverview}
-    />
+    /> */}
     <RouteWithSidebar
       exact
       path={Routes.Transactions.path}
@@ -127,5 +128,11 @@ export default () => (
     />
 
     <Redirect to={Routes.NotFound.path} />
+
+    <RouteWithSidebar
+      exact
+      path={Routes.DashboardOverview.path}
+      component={NewConfigurationButton}
+    />
   </Switch>
 );

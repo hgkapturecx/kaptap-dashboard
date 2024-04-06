@@ -1,163 +1,252 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
-  faCashRegister,
-  faChartLine,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Col,
-  Row,
+  Card,
+  Modal,
   Button,
+  Form,
   Dropdown,
-  ButtonGroup,
 } from "@themesberg/react-bootstrap";
 
-import {
-  CounterWidget,
-  CircleChartWidget,
-  BarChartWidget,
-  TeamMembersWidget,
-  ProgressTrackWidget,
-  RankingWidget,
-  SalesValueWidget,
-  SalesValueWidgetPhone,
-  AcquisitionWidget,
-} from "../../components/Widgets";
-import { PageVisitsTable } from "../../components/Tables";
-import { trafficShares, totalOrders } from "../../data/charts";
+const NewConfigurationButton = () => {
+  const [showAddConfig, setShowAddConfig] = useState(false);
+  const [showDefaultConfig, setShowDefaultConfig] = useState(false);
+  const [selectedJourneyCount, setSelectedJourneyCount] = useState(20);
+  const [eventFilters, setEventFilters] = useState({
+    login: true,
+    addToCart: true,
+    productChecked: true,
+    checkout: true,
+    paymentDone: true,
+  });
 
-export default () => {
+  const handleAddConfig = () => {
+    setShowAddConfig(true);
+  };
+
+  const handleDefaultConfig = () => {
+    setShowDefaultConfig(true);
+  };
+  const handleCloseModal = () => {
+    setShowAddConfig(false);
+    setShowDefaultConfig(false);
+  };
+
+  const handleJourneyCountChange = (count) => {
+    setSelectedJourneyCount(count);
+  };
+
+  const handleEventFilterChange = (event) => {
+    const { name, checked } = event.target;
+    setEventFilters({
+      ...eventFilters,
+      [name]: checked,
+    });
+  };
+
   return (
     <>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-        <Dropdown className="btn-toolbar">
-          <Dropdown.Toggle
-            as={Button}
-            variant="primary"
-            size="sm"
-            className="me-2"
-          >
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            New Configuration
-          </Dropdown.Toggle>
-          {/* <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faTasks} className="me-2" /> New
-              Configuration
-            </Dropdown.Item>
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faCloudUploadAlt} className="me-2" />{" "}
-              Upload Files
-            </Dropdown.Item>
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faUserShield} className="me-2" /> Preview
-              Security
-            </Dropdown.Item>
+      <div className="d-flex justify-content-left flex-wrap flex-md-nowrap align-items-center py-4">
+        <Card
+          onClick={handleDefaultConfig}
+          className="config-card"
+          style={{
+            width: "200px",
+            height: "150px",
+            margin: "10px",
+            cursor: "pointer",
+            transition: "background-color 0.3s",
+            backgroundColor: showAddConfig ? "inherit" : "#007bff",
+            color: showDefaultConfig ? "#fff" : "inherit",
+          }}
+        >
+          <Card.Body>
+            <Card.Title>Default Configuration</Card.Title>
+          </Card.Body>
+        </Card>
 
-            <Dropdown.Divider />
-
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faRocket} className="text-danger me-2" />{" "}
-              Upgrade to Pro
-            </Dropdown.Item>
-          </Dropdown.Menu> */}
-        </Dropdown>
-
-        <ButtonGroup>
-          <Button variant="outline-primary" size="sm">
-            Share
-          </Button>
-          <Button variant="outline-primary" size="sm">
-            Export
-          </Button>
-        </ButtonGroup>
+        <Card
+          onClick={handleAddConfig}
+          className="config-card"
+          style={{
+            width: "200px",
+            height: "150px",
+            margin: "10px",
+            cursor: "pointer",
+            transition: "background-color 0.3s",
+            backgroundColor: showAddConfig ? "#007bff" : "inherit",
+            color: showAddConfig ? "#fff" : "inherit",
+          }}
+        >
+          <Card.Body>
+            <Card.Title>
+              <FontAwesomeIcon icon={faPlus} className="me-2" />
+              New Configuration
+            </Card.Title>
+          </Card.Body>
+        </Card>
       </div>
 
-      <Row className="justify-content-md-center">
-        <Col xs={12} className="mb-4 d-none d-sm-block">
-          <SalesValueWidget
-            title="Sales Value"
-            value="10,567"
-            percentage={10.57}
-          />
-        </Col>
-        <Col xs={12} className="mb-4 d-sm-none">
-          <SalesValueWidgetPhone
-            title="Sales Value"
-            value="10,567"
-            percentage={10.57}
-          />
-        </Col>
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-          <CounterWidget
-            category="Customers"
-            title="345k"
-            period="Feb 1 - Apr 1"
-            percentage={18.2}
-            icon={faChartLine}
-            iconColor="shape-secondary"
-          />
-        </Col>
+      <Modal show={showDefaultConfig} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Default Configuration</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Show last</Form.Label>
+              <Dropdown>
+                <Dropdown.Toggle variant="primary" id="dropdown-basic" disabled>
+                  {selectedJourneyCount}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => handleJourneyCountChange(20)}
+                    disabled
+                  >
+                    20
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleJourneyCountChange(40)}
+                    disabled
+                  >
+                    40
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleJourneyCountChange(60)}
+                    disabled
+                  >
+                    60
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>{" "}
+              user's journey's
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Event Filters</Form.Label>
+              <Form.Check
+                type="checkbox"
+                label="Login Event"
+                name="login"
+                checked={eventFilters.login}
+                onChange={handleEventFilterChange}
+                disabled
+              />
+              <Form.Check
+                type="checkbox"
+                label="Add to Cart"
+                name="addToCart"
+                checked={eventFilters.addToCart}
+                onChange={handleEventFilterChange}
+                disabled
+              />
+              <Form.Check
+                type="checkbox"
+                label="Product Checked"
+                name="productChecked"
+                checked={eventFilters.productChecked}
+                onChange={handleEventFilterChange}
+                disabled
+              />
+              <Form.Check
+                type="checkbox"
+                label="Checkout"
+                name="checkout"
+                checked={eventFilters.checkout}
+                onChange={handleEventFilterChange}
+                disabled
+              />
+              <Form.Check
+                type="checkbox"
+                label="Payment Done"
+                name="paymentDone"
+                checked={eventFilters.paymentDone}
+                onChange={handleEventFilterChange}
+                disabled
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+      </Modal>
 
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-          <CounterWidget
-            category="Revenue"
-            title="$43,594"
-            period="Feb 1 - Apr 1"
-            percentage={28.4}
-            icon={faCashRegister}
-            iconColor="shape-tertiary"
-          />
-        </Col>
-
-        <Col xs={12} sm={6} xl={4} className="mb-4">
-          <CircleChartWidget title="Traffic Share" data={trafficShares} />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col xs={12} xl={12} className="mb-4">
-          <Row>
-            <Col xs={12} xl={8} className="mb-4">
-              <Row>
-                <Col xs={12} className="mb-4">
-                  <PageVisitsTable />
-                </Col>
-
-                <Col xs={12} lg={6} className="mb-4">
-                  <TeamMembersWidget />
-                </Col>
-
-                <Col xs={12} lg={6} className="mb-4">
-                  <ProgressTrackWidget />
-                </Col>
-              </Row>
-            </Col>
-
-            <Col xs={12} xl={4}>
-              <Row>
-                <Col xs={12} className="mb-4">
-                  <BarChartWidget
-                    title="Total orders"
-                    value={452}
-                    percentage={18.2}
-                    data={totalOrders}
-                  />
-                </Col>
-
-                <Col xs={12} className="px-0 mb-4">
-                  <RankingWidget />
-                </Col>
-
-                <Col xs={12} className="px-0">
-                  <AcquisitionWidget />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <Modal show={showAddConfig} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Configuration</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Show last</Form.Label>
+              <Dropdown>
+                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                  {selectedJourneyCount}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleJourneyCountChange(20)}>
+                    20
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleJourneyCountChange(40)}>
+                    40
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleJourneyCountChange(60)}>
+                    60
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>{" "}
+              user's journey's
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Event Filters</Form.Label>
+              <Form.Check
+                type="checkbox"
+                label="Login Event"
+                name="login"
+                checked={eventFilters.login}
+                onChange={handleEventFilterChange}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Add to Cart"
+                name="addToCart"
+                checked={eventFilters.addToCart}
+                onChange={handleEventFilterChange}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Product Checked"
+                name="productChecked"
+                checked={eventFilters.productChecked}
+                onChange={handleEventFilterChange}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Checkout"
+                name="checkout"
+                checked={eventFilters.checkout}
+                onChange={handleEventFilterChange}
+              />
+              <Form.Check
+                type="checkbox"
+                label="Payment Done"
+                name="paymentDone"
+                checked={eventFilters.paymentDone}
+                onChange={handleEventFilterChange}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
+
+export default NewConfigurationButton;

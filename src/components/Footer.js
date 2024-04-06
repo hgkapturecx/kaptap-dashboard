@@ -14,6 +14,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
 import ReactLogo from "../assets/img/technologies/react-logo.svg";
 import LaravelLogo from "../assets/img/technologies/laravel-logo.svg";
+
 export default (props) => {
   const currentYear = moment().get("year");
   const showSettings = props.showSettings;
@@ -105,7 +106,17 @@ export default (props) => {
       ) : (
         ""
       )}
-      <footer className="footer section py-5">
+      <footer
+        className="footer section py-2"
+        style={{
+          position: "fixed", // Change to fixed position'
+          bottom: "0", // Set to bottom of viewport
+          left: "59%", // Center horizontally
+          transform: "translateX(-50%)", // Adjust horizontally to center
+          width: "76%", // Set the width as required
+          zIndex: "1000", // Set a higher z-index to ensure it's on top
+        }}
+      >
         <Row>
           <Col xs={12} lg={6} className="mb-4 mb-lg-0">
             <p className="mb-0 text-center text-xl-left">
