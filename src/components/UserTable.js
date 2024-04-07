@@ -24,7 +24,11 @@ import {
   Pagination,
   ButtonGroup,
   Spinner,
+  OverlayTrigger,
+  Popover,
 } from "@themesberg/react-bootstrap";
+
+import CustomTimeline from "./CustomTimeLine";
 
 export const UserTable = () => {
   const [clientData, setClientData] = useState([]);
@@ -58,8 +62,6 @@ export const UserTable = () => {
       const data = await response.json();
       setClientData(data?.data);
       setTotalclientData(data?.data?.users?.length);
-
-      console.log(data, "data");
     } catch (error) {
       console.error("Error fetching clientData:", error);
     } finally {
@@ -67,21 +69,39 @@ export const UserTable = () => {
     }
   };
 
-  const TableRow = ({ name, createdAt, count }) => {
+  const TableRow = ({ user }) => {
+    const { name, createdAt, count } = user;
+
     const formattedCreatedAt = new Date(createdAt).toLocaleString();
 
+    const renderPopover = () => {
+      return (
+        <Popover id={`user-popover-${name}`}>
+          <Popover.Content>
+            <CustomTimeline user={user} />
+          </Popover.Content>
+        </Popover>
+      );
+    };
+
     return (
-      <tr>
-        <td>
-          <span className="fw-normal">{name}</span>
-        </td>
-        <td>
-          <span className="fw-normal">{formattedCreatedAt}</span>
-        </td>
-        <td>
-          <span className="fw-normal">{count}</span>
-        </td>
-      </tr>
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={renderPopover()}
+      >
+        <tr>
+          <td>
+            <span className="fw-normal">{name}</span>
+          </td>
+          <td>
+            <span className="fw-normal">{formattedCreatedAt}</span>
+          </td>
+          <td>
+            <span className="fw-normal">{count}</span>
+          </td>
+        </tr>
+      </OverlayTrigger>
     );
   };
 
@@ -109,12 +129,7 @@ export const UserTable = () => {
               </thead>
               <tbody>
                 {clientData?.users?.map((user) => (
-                  <TableRow
-                    key={`transaction-${user.id}`}
-                    name={user.name}
-                    createdAt={user.createdAt}
-                    count={user.count}
-                  />
+                  <TableRow key={`transaction-${user.id}`} user={user} />
                 ))}
               </tbody>
             </Table>
