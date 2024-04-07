@@ -3,6 +3,7 @@ export const Routes = {
   Presentation: { path: "/" },
   DashboardOverview: { path: "/dashboard/overview" },
   Transactions: { path: "/transactions" },
+  UsersInfo: { path: "/usersInfo" },
   Signin: { path: "/examples/sign-in" },
   Signup: { path: "/examples/sign-up" },
   ForgotPassword: { path: "/examples/forgot-password" },

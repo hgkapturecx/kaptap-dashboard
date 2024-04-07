@@ -19,6 +19,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
 import NewConfigurationButton from "./dashboard/DashboardOverview";
+import UsersInfo from "./UsersInfo";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -92,6 +93,12 @@ export default () => (
       component={NewConfigurationButton}
     />
 
+    <RouteWithSidebar
+      exact
+      path={Routes.Presentation.path}
+      component={UsersInfo}
+    />
+
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
     <RouteWithLoader
       exact
@@ -116,11 +123,13 @@ export default () => (
     />
 
     {/* pages */}
-    {/* <RouteWithSidebar
+
+    <RouteWithSidebar
       exact
-      path={Routes.DashboardOverview.path}
-      component={DashboardOverview}
-    /> */}
+      path={Routes.UsersInfo.path}
+      component={UsersInfo}
+    />
+
     <RouteWithSidebar
       exact
       path={Routes.Transactions.path}

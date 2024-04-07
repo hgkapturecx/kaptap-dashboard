@@ -9,6 +9,7 @@ import {
   faSignOutAlt,
   faTimes,
   faCog,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -180,7 +181,11 @@ export default (props = {}) => {
                 icon={faCog}
                 link={Routes.Presentation.path}
               />
-
+              <NavItem
+                title="UsersInfo"
+                icon={faUser}
+                link={Routes.UsersInfo.path}
+              />
               <NavItem
                 title="Transactions"
                 icon={faHandHoldingUsd}
