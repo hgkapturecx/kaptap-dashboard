@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import { Routes as CustomRoute } from "../routes";
 
 // pages
-import DashboardOverview from "./dashboard/DashboardOverview";
+// import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
@@ -18,6 +18,8 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
+import NewConfigurationButton from "./dashboard/DashboardOverview";
+import UsersInfo from "./UsersInfo";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -32,7 +34,6 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => (
         <>
-          {" "}
           <Preloader show={loaded ? false : true} /> <Component {...props} />{" "}
         </>
       )}
@@ -116,17 +117,25 @@ export default () => (
     />
 
     {/* pages */}
+
     <RouteWithSidebar
       exact
-      path={CustomRoute.DashboardOverview.path}
-      component={DashboardOverview}
+      path={Routes.UsersInfo.path}
+      component={UsersInfo}
     />
+
     <RouteWithSidebar
       exact
       path={CustomRoute.Transactions.path}
       component={Transactions}
     />
 
-    <Redirect to={CustomRoute.NotFound.path} />
+    <Redirect to={Routes.NotFound.path} />
+
+    <RouteWithSidebar
+      exact
+      path={Routes.DashboardOverview.path}
+      component={NewConfigurationButton}
+    />
   </Switch>
 );

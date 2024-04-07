@@ -24,9 +24,7 @@ import {
   Pagination,
   ButtonGroup,
 } from "@themesberg/react-bootstrap";
-import { Link } from "react-router-dom";
 
-import { Routes } from "../routes";
 import { pageVisits, pageTraffic, pageRanking } from "../data/tables";
 import transactions from "../data/transactions";
 import commands from "../data/commands";
