@@ -176,22 +176,22 @@ export default (props = {}) => {
                 image={ReactHero}
               />
 
+                <NavItem
+                  title="UsersInfo"
+                  icon={faUser}
+                  link={"/"}
+                />
               <NavItem
                 title="Configuration"
                 icon={faCog}
-                link={Routes.Presentation.path}
-              />
-              <NavItem
-                title="UsersInfo"
-                icon={faUser}
-                link={Routes.UsersInfo.path}
+                link={"/Configuration"}
               />
               <NavItem
                 title="Transactions"
                 icon={faHandHoldingUsd}
                 link={Routes.Transactions.path}
               />
-              <CollapsableNavItem
+              {/* <CollapsableNavItem
                 eventKey="examples/"
                 title="Page Examples"
                 icon={faFileAlt}
@@ -212,7 +212,7 @@ export default (props = {}) => {
                   title="500 Server Error"
                   link={Routes.ServerError.path}
                 />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
             </Nav>
           </div>
         </SimpleBar>

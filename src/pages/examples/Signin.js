@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
   Row,
@@ -10,31 +8,66 @@ import {
   Container,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 
-import { Routes } from "../../routes";
+// import { login } from "../../services/auth.services";
 import BgImage from "../../assets/img/illustrations/signin.svg";
+import { getAuthToken, storeProjectID, storeSecretToken, storeUserType } from "../../utils/genral.function";
+import fetchController from "../../services/fetchControler";
 
 export default () => {
-  const [userName, setUserName] = useState("");
+  const history  = useHistory()
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [projectName, setProjectName] = useState("");
-  const onSubmit = () => {};
+  const [projectID, setprojectID] = useState("");
+
+  const onSubmit = () => {
+    if(!password || !email || !projectID){
+      return
+    }
+
+    fetchController('/login' ,{
+      password,
+      email,
+      projectID
+    }).then(res=>{
+      console.log("Login Successfully");
+      if(res.success){
+        storeSecretToken(res?.data?.secretToken)
+        storeProjectID(res?.data?.projectID)
+        storeUserType(res?.data?.userType)
+        history.push('/')
+      }else{
+        alert("please try after sometime")
+      }
+    })
+    .catch((err) => {
+      alert(err);
+      console.log("Login error:",err);
+    });
+  };
+
+  const defaultProjectID = () => { 
+    const projectID = getAuthToken("projectID")
+
+    if(projectID){
+      return {
+        defaultValue:projectID,
+        disabled:true
+      }
+    }else{
+      return {}
+    }
+  }
+
+
 
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
-          <p className="text-center">
-            <Card.Link
-              as={Link}
-              to={Routes.DashboardOverview.path}
-              className="text-gray-700"
-            >
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
-              homepage
-            </Card.Link>
-          </p>
+
           <Row
             className="justify-content-center form-bg-image"
             style={{ backgroundImage: `url(${BgImage})` }}
@@ -54,22 +87,14 @@ export default () => {
                     onSubmit();
                   }}
                 >
-                  <Form.Group id="userName" className="mb-2">
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control
-                      required
-                      placeholder="User Name"
-                      value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group id="projectName" className="mb-2">
-                    <Form.Label>Project Name</Form.Label>
+                  <Form.Group id="projectID" className="mb-2">
+                    <Form.Label>Project ID</Form.Label>
                     <Form.Control
                       required
                       placeholder="Project Name"
-                      value={projectName}
-                      onChange={(e) => setProjectName(e.target.value)}
+                      value={projectID}
+                      {...defaultProjectID()}
+                      onChange={(e) => setprojectID(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group id="email" className="mb-2">
@@ -105,7 +130,7 @@ export default () => {
                     Not registered?
                     <Card.Link
                       as={Link}
-                      to={Routes.Signup.path}
+                      to={"/"}
                       className="fw-bold"
                     >
                       {` Create account `}

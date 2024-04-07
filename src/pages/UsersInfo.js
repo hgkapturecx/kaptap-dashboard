@@ -25,19 +25,19 @@ export default () => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-block mb-4 mb-md-0">
-          <Breadcrumb
+          {/* <Breadcrumb
             className="d-none d-md-inline-block"
             listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}
           >
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faUser} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item active>UsersInfo</Breadcrumb.Item>
-          </Breadcrumb>
-          <h4>UsersInfo</h4>
+            <Breadcrumb.Item active>Users Info</Breadcrumb.Item>
+          </Breadcrumb> */}
+          <h4>Users Info</h4>
           <p className="mb-0">User activity dashboard.</p>
         </div>
-        <div className="btn-toolbar mb-2 mb-md-0">
+        {/* <div className="btn-toolbar mb-2 mb-md-0">
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">
               Share
@@ -46,7 +46,7 @@ export default () => {
               Export
             </Button>
           </ButtonGroup>
-        </div>
+        </div> */}
       </div>
 
       <div className="table-settings mb-4">

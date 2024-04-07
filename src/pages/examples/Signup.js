@@ -10,12 +10,15 @@ import {
   Container,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import { register } from "../../services/auth.services";
+import { storeProjectID , storeSecretToken, storeUserType } from "../../utils/genral.function";
 
 export default () => {
+  const history  = useHistory()
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -30,12 +33,19 @@ export default () => {
     };
     register(body)
       .then((res) => {
-        alert("Client Created Successfully");
-        console.log(res);
+        console.log("Client Created Successfully");
+        if(res.success){
+          storeProjectID(res?.data?.projectID)
+          storeUserType(res?.data?.userType)
+          storeSecretToken(res?.data?.secretToken)
+          history.push('/')
+        }else{
+          alert("please try after sometime")
+        }
       })
       .catch((err) => {
         alert(err);
-        console.log(err);
+        console.log("register error:",err);
       });
   };
 
@@ -43,7 +53,7 @@ export default () => {
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
-          <p className="text-center">
+          {/* <p className="text-center">
             <Card.Link
               as={Link}
               to={Routes.DashboardOverview.path}
@@ -52,7 +62,7 @@ export default () => {
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
               Homepage
             </Card.Link>
-          </p>
+          </p> */}
           <Row
             className="justify-content-center form-bg-image"
             style={{ backgroundImage: `url(${BgImage})` }}

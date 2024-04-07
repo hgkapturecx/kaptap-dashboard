@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch , useHistory } from "react-router-dom";
 import {  Routes } from "../routes";
 import { getAuthToken } from "../utils/genral.function";
 // pages
@@ -85,30 +85,12 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 };
 
 export default () => (
-  <Switch>
-    
-
-    {/* pages */}
-
-
-    <RouteWithSidebar
-      exact
-      path={"/"}
-      component={UsersInfo}
-    />
-
-    <RouteWithSidebar
-      exact
-      path={Routes.Transactions.path}
-      component={Transactions}
-    />
+    <Switch >
+      <Route exact path={'/'} component={Signup} />
+      <Route exact path={Routes.Signin.path} component={Signin} />
+      {/* Add other routes here */}
+      <Route component={NotFoundPage} />
+    </Switch>
+  );
 
 
-    <RouteWithSidebar
-      exact
-      path={"/Configuration"}
-      component={NewConfigurationButton}
-    />
-    <Redirect to={Routes.NotFound.path} />
-  </Switch>
-);
