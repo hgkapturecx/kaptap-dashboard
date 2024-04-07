@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { Routes } from "../routes";
+import { Route, Redirect, Switch } from "react-router-dom";
+import { Routes as CustomRoute } from "../routes";
 
 // pages
 import DashboardOverview from "./dashboard/DashboardOverview";
@@ -85,48 +85,48 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 
 export default () => (
   <Switch>
-    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
+    <RouteWithLoader exact path={CustomRoute.Signin.path} component={Signin} />
     <RouteWithSidebar
       exact
-      path={Routes.Presentation.path}
+      path={CustomRoute.Presentation.path}
       component={DashboardOverview}
     />
 
-    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
+    <RouteWithLoader exact path={CustomRoute.Signup.path} component={Signup} />
     <RouteWithLoader
       exact
-      path={Routes.ForgotPassword.path}
+      path={CustomRoute.ForgotPassword.path}
       component={ForgotPassword}
     />
     <RouteWithLoader
       exact
-      path={Routes.ResetPassword.path}
+      path={CustomRoute.ResetPassword.path}
       component={ResetPassword}
     />
-    <RouteWithLoader exact path={Routes.Lock.path} component={Lock} />
+    <RouteWithLoader exact path={CustomRoute.Lock.path} component={Lock} />
     <RouteWithLoader
       exact
-      path={Routes.NotFound.path}
+      path={CustomRoute.NotFound.path}
       component={NotFoundPage}
     />
     <RouteWithLoader
       exact
-      path={Routes.ServerError.path}
+      path={CustomRoute.ServerError.path}
       component={ServerError}
     />
 
     {/* pages */}
     <RouteWithSidebar
       exact
-      path={Routes.DashboardOverview.path}
+      path={CustomRoute.DashboardOverview.path}
       component={DashboardOverview}
     />
     <RouteWithSidebar
       exact
-      path={Routes.Transactions.path}
+      path={CustomRoute.Transactions.path}
       component={Transactions}
     />
 
-    <Redirect to={Routes.NotFound.path} />
+    <Redirect to={CustomRoute.NotFound.path} />
   </Switch>
 );
