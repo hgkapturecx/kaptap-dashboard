@@ -20,6 +20,7 @@ export default () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [projectName, setProjectName] = useState("");
+
   const onSubmit = async () => {
     let body = {
       userName: userName,
@@ -37,6 +38,7 @@ export default () => {
         console.log(err);
       });
   };
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -48,7 +50,7 @@ export default () => {
               className="text-gray-700"
             >
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
-              homepage
+              Homepage
             </Card.Link>
           </p>
           <Row
@@ -71,10 +73,10 @@ export default () => {
                   }}
                 >
                   <Form.Group id="userName" className="mb-2">
-                    <Form.Label>UserName</Form.Label>
+                    <Form.Label>User Name</Form.Label>
                     <Form.Control
                       required
-                      placeholder="UserName"
+                      placeholder="User Name"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                     />

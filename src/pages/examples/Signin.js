@@ -20,6 +20,7 @@ export default () => {
   const [email, setEmail] = useState("");
   const [projectName, setProjectName] = useState("");
   const onSubmit = () => {};
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -54,10 +55,10 @@ export default () => {
                   }}
                 >
                   <Form.Group id="userName" className="mb-2">
-                    <Form.Label>UserName</Form.Label>
+                    <Form.Label>User Name</Form.Label>
                     <Form.Control
                       required
-                      placeholder="UserName"
+                      placeholder="User Name"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                     />

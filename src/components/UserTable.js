@@ -23,36 +23,20 @@ import {
   ProgressBar,
   Pagination,
   ButtonGroup,
+  Spinner,
 } from "@themesberg/react-bootstrap";
-
-import commands from "../data/commands";
-
-const ValueChange = ({ value, suffix }) => {
-  const valueIcon = value < 0 ? faAngleDown : faAngleUp;
-  const valueTxtColor = value < 0 ? "text-danger" : "text-success";
-
-  return value ? (
-    <span className={valueTxtColor}>
-      <FontAwesomeIcon icon={valueIcon} />
-      <span className="fw-bold ms-1">
-        {Math.abs(value)}
-        {suffix}
-      </span>
-    </span>
-  ) : (
-    "--"
-  );
-};
 
 export const UserTable = () => {
   const [clientData, setClientData] = useState([]);
-  const [totalclientData, setTotalclientData] = useState(0);
+  const [totalClientData, setTotalclientData] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchclientData();
   }, []);
 
   const fetchclientData = async () => {
+    setIsLoading(true);
     try {
       const url = "https://kaptap-backend.vercel.app/api/v1/client-info";
 
@@ -78,6 +62,8 @@ export const UserTable = () => {
       console.log(data, "data");
     } catch (error) {
       console.error("Error fetching clientData:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,41 +88,52 @@ export const UserTable = () => {
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
-        <Table hover className="user-table align-items-center">
-          <thead>
-            <tr>
-              <th className="border-bottom">User Name</th>
-              <th className="border-bottom">Created At</th>
-              <th className="border-bottom">Total Events</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tbody>
-              {clientData?.users?.map((user) => (
-                <TableRow
-                  key={`transaction-${user.id}`}
-                  name={user?.name}
-                  createdAt={user?.createdAt}
-                  count={user?.count}
-                />
-              ))}
-            </tbody>
-          </tbody>
-        </Table>
-        <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-          <Nav>
-            <Pagination className="mb-2 mb-lg-0">
-              <Pagination.Prev>Pclrevious</Pagination.Prev>
-              <Pagination.Item active>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Next>Next</Pagination.Next>
-            </Pagination>
-          </Nav>
-          <small className="fw-bold">
-            Showing <b>{totalclientData}</b> out of <b>{totalclientData}</b>{" "}
-            entries
-          </small>
-        </Card.Footer>
+        {isLoading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "200px" }}
+          >
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <>
+            <Table hover className="user-table align-items-center">
+              <thead>
+                <tr>
+                  <th className="border-bottom">User Name</th>
+                  <th className="border-bottom">Created At</th>
+                  <th className="border-bottom">Total Events</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientData?.users?.map((user) => (
+                  <TableRow
+                    key={`transaction-${user.id}`}
+                    name={user.name}
+                    createdAt={user.createdAt}
+                    count={user.count}
+                  />
+                ))}
+              </tbody>
+            </Table>
+            <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
+              <Nav>
+                <Pagination className="mb-2 mb-lg-0">
+                  <Pagination.Prev>Previous</Pagination.Prev>
+                  <Pagination.Item active>1</Pagination.Item>
+                  <Pagination.Item>2</Pagination.Item>
+                  <Pagination.Next>Next</Pagination.Next>
+                </Pagination>
+              </Nav>
+              <small className="fw-bold">
+                Showing <b>{totalClientData}</b> out of <b>{totalClientData}</b>{" "}
+                entries
+              </small>
+            </Card.Footer>
+          </>
+        )}
       </Card.Body>
     </Card>
   );

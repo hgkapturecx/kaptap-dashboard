@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { Routes as CustomRoute } from "../routes";
+import { Routes as CustomRoute, Routes } from "../routes";
 
 // pages
 // import DashboardOverview from "./dashboard/DashboardOverview";
@@ -90,7 +90,7 @@ export default () => (
     <RouteWithSidebar
       exact
       path={CustomRoute.Presentation.path}
-      component={DashboardOverview}
+      component={NewConfigurationButton}
     />
 
     <RouteWithLoader exact path={CustomRoute.Signup.path} component={Signup} />

@@ -35,7 +35,7 @@ export default () => {
             <Breadcrumb.Item active>UsersInfo</Breadcrumb.Item>
           </Breadcrumb>
           <h4>UsersInfo</h4>
-          <p className="mb-0">Your web analytics dashboard template.</p>
+          <p className="mb-0">User activity dashboard.</p>
         </div>
         <div className="btn-toolbar mb-2 mb-md-0">
           <ButtonGroup>
