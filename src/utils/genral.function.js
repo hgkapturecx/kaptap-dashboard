@@ -1,7 +1,8 @@
 const getAuthToken = (type) => {
     const tokens = {
         usertype : localStorage.getItem("KT_UT") ,
-        projectID : localStorage.getItem("KT_ID")
+        projectID : localStorage.getItem("KT_ID"),
+        secretToken : localStorage.getItem("KT_TOKEN")
     }
 
     return tokens[type] 
@@ -25,8 +26,12 @@ const storeSecretToken = (secretToken)=>{
 
 }
 
+const  Logout = () => {
+    localStorage.clear()
+}
+
 
 export {
     getAuthToken,
-    storeProjectID, storeUserType, storeSecretToken,  isAuthenticated
+    storeProjectID, storeUserType, storeSecretToken,  isAuthenticated , Logout
 }

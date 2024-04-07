@@ -4,7 +4,7 @@ const BASE_URL = ENV==="DEV" ? "http://localhost:4000" : "https://kaptap-backend
 
 const fetchController = async (endPoint, body={}) => {
     try {
-        const token = getAuthToken()
+        const token = getAuthToken("projectID") && getAuthToken("secretToken") ? `KT_ID=${getAuthToken("projectID")}; KT_TOKEN=${getAuthToken("secretToken")}` :null
         let reqBody = {}
 
         if(token){

@@ -24,6 +24,7 @@ import {
 
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
+import { getAuthToken , Logout } from "../utils/genral.function";
 
 export default (props) => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
@@ -117,14 +118,26 @@ export default (props) => {
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">
                 <div className="media d-flex align-items-center">
-                  <Image
-                    src={Profile3}
-                    className="user-avatar md-avatar rounded-circle"
-                  />
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                     <span className="mb-0 font-small fw-bold">
-                      Bonnie Green
+                      {getAuthToken("projectID")}
                     </span>
+                  </div>
+                  <div style={{
+                    "background": "black",
+                    "padding": "5px",
+                    borderRadius: "12px",
+                  }}  
+                  
+                  onClick={Logout}
+                   
+                   >
+
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    className="text-danger me-2"
+                  />
+                  Logout
                   </div>
                 </div>
               </Dropdown.Toggle>
@@ -148,11 +161,7 @@ export default (props) => {
                 <Dropdown.Divider />
 
                 <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon
-                    icon={faSignOutAlt}
-                    className="text-danger me-2"
-                  />
-                  Logout
+                 
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
