@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import {  Routes } from "../routes";
-import { getAuthToken } from "../utils/genral.function";
+import { getAuthToken, isAuthenticated } from "../utils/genral.function";
 // pages
 // import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
@@ -20,6 +20,7 @@ import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
 import NewConfigurationButton from "./dashboard/DashboardOverview";
 import UsersInfo from "./UsersInfo";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -84,11 +85,23 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
   );
 };
 
-export default () => (
-  <Switch>
-    
+export default () => {
+  const history  = useHistory()
 
-    {/* pages */}
+  useEffect(()=>{
+    const auth = localStorage.getItem("KT_ID") && localStorage.getItem("KT_TOKEN") && localStorage.getItem("KT_UT")
+    if(auth){
+      history.replace("/")
+    }
+    history.replace(Routes.Signup.path)
+
+  },[history])
+
+  return(
+    <Switch>
+    
+    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
+    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
 
 
     <RouteWithSidebar
@@ -111,4 +124,5 @@ export default () => (
     />
     <Redirect to={Routes.NotFound.path} />
   </Switch>
-);
+  )
+}

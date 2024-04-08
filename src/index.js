@@ -9,12 +9,12 @@ import "./scss/volt.scss";
 import "react-datetime/css/react-datetime.css";
 
 import ScrollToTop from "./components/ScrollToTop";
-import App from "./App";
+import HomePage from "./pages/HomePage";
 
 ReactDOM.render(
   <Router>
     <ScrollToTop />
-    <App/>
+    <HomePage/>
   </Router>,
     document.getElementById("root")
 );
