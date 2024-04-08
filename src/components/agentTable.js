@@ -8,8 +8,7 @@ import {
   Table,
   Spinner,
   Modal,
-  Form
-
+  Form,
 } from "@themesberg/react-bootstrap";
 import fetchController from "../services/fetchControler";
 
@@ -20,11 +19,11 @@ const AgentTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isclientLoading, setIsclientLoading] = useState(false);
 
-  const [agentConfigPop, setAgentConfigPop] = useState(false)
+  const [agentConfigPop, setAgentConfigPop] = useState(false);
 
   useEffect(() => {
     fetchagentData();
-    fetchclientData()
+    fetchclientData();
   }, []);
 
   const fetchclientData = async () => {
@@ -32,36 +31,36 @@ const AgentTable = () => {
     fetchController("/client-info", {})
       .then((res) => {
         setClientData(res?.data);
-        setIsclientLoading(false)
+        setIsclientLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching clientData:", error);
-        setIsclientLoading(false)
-
-      })
+        setIsclientLoading(false);
+      });
   };
 
   const fetchagentData = async () => {
     setIsLoading(true);
     try {
-      fetchController('/agent-info').then(res => {
-        console.log("Agent Info Fetch Successfully");
-        if (res.success) {
-          console.log("/agent-info - fetchController :-", res)
-          setAgentData(res?.data);
-          setIsLoading(false);
-        } else {
-          alert("please try after sometime")
-          setIsLoading(false);
-        }
-      })
+      fetchController("/agent-info")
+        .then((res) => {
+          console.log("Agent Info Fetch Successfully");
+          if (res.success) {
+            console.log("/agent-info - fetchController :-", res);
+            setAgentData(res?.data);
+            setIsLoading(false);
+          } else {
+            alert("please try after sometime");
+            setIsLoading(false);
+          }
+        })
         .catch((err) => {
           alert(err);
           setIsLoading(false);
           console.log("Agent Info error:", err);
         });
     } catch (error) {
-      alert(error)
+      alert(error);
       setIsLoading(false);
       console.error("Error fetching agentData:", error);
     }
@@ -71,8 +70,6 @@ const AgentTable = () => {
     const { email, createdAt } = agent;
 
     const formattedCreatedAt = new Date(createdAt).toLocaleString();
-
-
 
     return (
       <tr>
@@ -86,9 +83,14 @@ const AgentTable = () => {
           <span className="fw-normal">{formattedCreatedAt}</span>
         </td>
         <td>
-          <Button onClick={() => {
-            setAgentConfigPop(agent)
-          }}>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => {
+              setAgentConfigPop(agent);
+            }}
+            style={{ borderRadius: "0.25rem" }}
+          >
             <FontAwesomeIcon icon={faPlus} />
           </Button>
         </td>
@@ -101,8 +103,6 @@ const AgentTable = () => {
   };
 
   const AgentModel = () => {
-
-
     return (
       <Modal show={Boolean(agentConfigPop)} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -123,7 +123,7 @@ const AgentTable = () => {
               <Form.Group className="mb-3">
                 <Form.Label>Event Filters</Form.Label>
 
-                {clientData?.events?.map(_event => {
+                {clientData?.events?.map((_event) => {
                   return (
                     <Form.Check
                       type="checkbox"
@@ -132,7 +132,7 @@ const AgentTable = () => {
                       checked={true}
                       disabled
                     />
-                  )
+                  );
                 })}
                 {/* <Form.Check
                 type="checkbox"
@@ -141,12 +141,9 @@ const AgentTable = () => {
                 checked={eventFilters.login}
                 onChange={handleEventFilterChange}
               /> */}
-
               </Form.Group>
             </Form>
           )}
-
-
         </Modal.Body>
         {/* <Modal.Footer>
          <Button variant="secondary" onClick={handleCloseModal}>
@@ -157,9 +154,8 @@ const AgentTable = () => {
           </Button> 
         </Modal.Footer> */}
       </Modal>
-    )
-  }
-
+    );
+  };
 
   return (
     <div>
@@ -191,7 +187,6 @@ const AgentTable = () => {
                   ))}
                 </tbody>
               </Table>
-
             </>
           )}
         </Card.Body>
@@ -201,4 +196,4 @@ const AgentTable = () => {
   );
 };
 
-export default AgentTable
+export default AgentTable;
