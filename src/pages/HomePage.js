@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import {  Routes } from "../routes";
+import { Routes } from "../routes";
 import { getAuthToken, isAuthenticated } from "../utils/genral.function";
 // pages
 // import DashboardOverview from "./dashboard/DashboardOverview";
@@ -86,44 +86,39 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 };
 
 export default () => {
-  const history  = useHistory()
+  const history = useHistory();
 
-  useEffect(()=>{
-    const auth = localStorage.getItem("KT_ID") && localStorage.getItem("KT_TOKEN") && localStorage.getItem("KT_UT")
-    if(auth){
-      history.push("/")
-    }else{
-      history.push(Routes.Signup.path)
+  useEffect(() => {
+    const auth =
+      localStorage.getItem("KT_ID") &&
+      localStorage.getItem("KT_TOKEN") &&
+      localStorage.getItem("KT_UT");
+    if (auth) {
+      history.push("/");
+    } else {
+      history.push(Routes.Signup.path);
     }
+  }, [history]);
 
-  },[history])
-
-  return(
+  return (
     <Switch>
-    
-    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
-    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
+      <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
+      <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
 
+      <RouteWithSidebar exact path={"/"} component={UsersInfo} />
 
-    <RouteWithSidebar
-      exact
-      path={"/"}
-      component={UsersInfo}
-    />
+      <RouteWithSidebar
+        exact
+        path={Routes.Transactions.path}
+        component={Transactions}
+      />
 
-    <RouteWithSidebar
-      exact
-      path={Routes.Transactions.path}
-      component={Transactions}
-    />
-
-
-    <RouteWithSidebar
-      exact
-      path={"/Configuration"}
-      component={NewConfigurationButton}
-    />
-    <Redirect to={Routes.NotFound.path} />
-  </Switch>
-  )
-}
+      <RouteWithSidebar
+        exact
+        path={"/Configuration"}
+        component={NewConfigurationButton}
+      />
+      <Redirect to={Routes.NotFound.path} />
+    </Switch>
+  );
+};

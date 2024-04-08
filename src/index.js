@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {   BrowserRouter as Router,} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // core styles
 import "./scss/volt.scss";
@@ -14,7 +14,7 @@ import HomePage from "./pages/HomePage";
 ReactDOM.render(
   <Router>
     <ScrollToTop />
-    <HomePage/>
+    <HomePage />
   </Router>,
-    document.getElementById("root")
+  document.getElementById("root")
 );

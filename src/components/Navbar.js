@@ -25,8 +25,10 @@ import {
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import { getAuthToken } from "../utils/genral.function";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default (props) => {
+  const history = useHistory();
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const areNotificationsRead = notifications.reduce(
     (acc, notif) => acc && notif.read,
@@ -72,8 +74,7 @@ export default (props) => {
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
         <div className="d-flex justify-content-between w-100">
-          <div className="d-flex align-items-center">
-          </div>
+          <div className="d-flex align-items-center"></div>
           <Nav className="align-items-center">
             {/* <Dropdown as={Nav.Item} onToggle={markNotificationsAsRead}>
               <Dropdown.Toggle
@@ -122,7 +123,13 @@ export default (props) => {
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item
+                  className="fw-bold"
+                  onClick={() => {
+                    localStorage.clear();
+                    history.push("/sign-in");
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faSignOutAlt}
                     className="text-danger me-2"

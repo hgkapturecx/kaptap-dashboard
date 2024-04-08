@@ -29,6 +29,7 @@ import {
 } from "@themesberg/react-bootstrap";
 // import fetchController from "../services/fetchControler";
 import CustomTimeline from "./CustomTimeLine";
+import fetchController from "../services/fetchControler";
 
 export const UserTable = () => {
   const [clientData, setClientData] = useState([]);
@@ -41,32 +42,17 @@ export const UserTable = () => {
 
   const fetchclientData = async () => {
     setIsLoading(true);
-    try {
-      const url = "https://kaptap-backend.vercel.app/api/v1/client-info";
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cookies:
-            "KT_ID=kapTap-66128e9e1043f0e68e43c5e7; KT_TOKEN=NjYxMjhlOWUxMDQzZjBlNjhlNDNjNWU3OnZpdmVrdGl3YXJpOmthcFRhcA==",
-        }),
+    fetchController("/client-info", {})
+      .then((res) => {
+        setClientData(res?.data);
+        setTotalclientData(res?.data?.users?.length);
+      })
+      .catch((error) => {
+        console.error("Error fetching clientData:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-
-      if (!response) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const data = await response.json();
-      setClientData(data?.data);
-      setTotalclientData(data?.data?.users?.length);
-    } catch (error) {
-      console.error("Error fetching clientData:", error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const TableRow = ({ user }) => {
@@ -76,11 +62,11 @@ export const UserTable = () => {
 
     const renderPopover = () => {
       return (
-        <Popover id={`user-popover-${name}`}>
-          <Popover.Content>
-            <CustomTimeline user={user} />
-          </Popover.Content>
-        </Popover>
+        // <Popover id={`user-popover-${name}`}>
+        //   <Popover.Content>
+        <CustomTimeline user={user} />
+        //   </Popover.Content>
+        // </Popover>
       );
     };
 
@@ -90,7 +76,7 @@ export const UserTable = () => {
         placement="bottom"
         overlay={renderPopover()}
       >
-        <tr>
+        <tr style={{ cursor: "pointer" }}>
           <td>
             <span className="fw-normal">{name}</span>
           </td>

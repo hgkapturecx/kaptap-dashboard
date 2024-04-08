@@ -1,0 +1,7 @@
+.payloadInfo {
+  display: none;
+}
+
+.timelineContent:hover .payloadInfo {
+  display: block;
+}
