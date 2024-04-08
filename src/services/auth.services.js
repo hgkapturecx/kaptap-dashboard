@@ -1,5 +1,3 @@
-import fetchController from "./fetchControler";
-
 export const register = async (body) => {
   try {
     const requestOptions = {
