@@ -11,7 +11,7 @@ import {
   Row,
   Col,
 } from "@themesberg/react-bootstrap";
-
+import AgentTable from "../../components/agentTable";
 const NewConfigurationButton = () => {
   const [showAddConfig, setShowAddConfig] = useState(false);
   const [showDefaultConfig, setShowDefaultConfig] = useState(false);
@@ -251,46 +251,79 @@ const NewConfigurationButton = () => {
   //   </>
   // );
 
+
+  const AccountInfo = () => {
+
+    const jsonData = `{
+      "projectID": ${localStorage.getItem("KT_ID")},
+      "apiKey": ${localStorage.getItem("KT_TOKEN")},
+    }`.trim();
+
+    return (
+      <>
+        <div style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly"
+        }}>
+          <div style={{
+            display: "flex",
+            flexDirection: "column"
+          }}>
+            <div className=" mb-2">
+              <h6>Install</h6>
+              <span>use this command to install the sdk</span>
+            </div>
+            <div>  <pre>
+              <code>
+                npm i kap-spk
+              </code>
+            </pre></div>
+          </div>
+          <div style={{
+            // width:"200px",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden"
+            // flexWrap:"wrap"
+          }}>
+            <div className=" mb-2">
+              <h6>Auth Token</h6>
+              <span>use this Token in  sdk</span>
+            </div>
+            <div>  <pre>
+              <code>
+                {
+                  jsonData
+                }
+              </code>
+            </pre></div>
+          </div>
+        </div>
+      </>
+
+
+    )
+  }
+
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-block mb-4 mb-md-0">
-          {/* <Breadcrumb
-            className="d-none d-md-inline-block"
-            listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}
-          >
-            <Breadcrumb.Item>
-              <FontAwesomeIcon icon={faUser} />
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>Users Info</Breadcrumb.Item>
-          </Breadcrumb> */}
+          <h4>Account Info</h4>
+        </div>
+      </div>
+      <AccountInfo />
+
+
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div className="d-block mb-4 mb-md-0">
           <h4>Agent Info</h4>
           <p className="mb-0">Agent activity dashboard.</p>
         </div>
-        {/* <div className="btn-toolbar mb-2 mb-md-0">
-          <ButtonGroup>
-            <Button variant="outline-primary" size="sm">
-              Share
-            </Button>
-            <Button variant="outline-primary" size="sm">
-              Export
-            </Button>
-          </ButtonGroup>
-        </div> */}
-      </div>
 
-      <div className="table-settings mb-4">
-        <Row className="justify-content-between align-items-center">
-          <Col xs={8} md={6} lg={3} xl={4}>
-            <InputGroup>
-              <InputGroup.Text>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Text>
-              <Form.Control type="text" placeholder="Search" />
-            </InputGroup>
-          </Col>
-        </Row>
       </div>
+      <AgentTable />
 
     </>
   );

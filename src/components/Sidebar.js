@@ -192,11 +192,11 @@ export default (props = {}) => {
                 link={"/Configuration"}
               />
                 )}
-              <NavItem
+              {/* <NavItem
                 title="Transactions"
                 icon={faHandHoldingUsd}
                 link={Routes.Transactions.path}
-              />
+              /> */}
               {/* <CollapsableNavItem
                 eventKey="examples/"
                 title="Page Examples"
