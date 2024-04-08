@@ -13,40 +13,40 @@ import {
 } from "@themesberg/react-bootstrap";
 import AgentTable from "../../components/agentTable";
 const NewConfigurationButton = () => {
-  const [showAddConfig, setShowAddConfig] = useState(false);
-  const [showDefaultConfig, setShowDefaultConfig] = useState(false);
-  const [selectedJourneyCount, setSelectedJourneyCount] = useState(20);
-  const [eventFilters, setEventFilters] = useState({
-    login: true,
-    addToCart: true,
-    productChecked: true,
-    checkout: true,
-    paymentDone: true,
-  });
+  // const [showAddConfig, setShowAddConfig] = useState(false);
+  // const [showDefaultConfig, setShowDefaultConfig] = useState(false);
+  // const [selectedJourneyCount, setSelectedJourneyCount] = useState(20);
+  // const [eventFilters, setEventFilters] = useState({
+  //   login: true,
+  //   addToCart: true,
+  //   productChecked: true,
+  //   checkout: true,
+  //   paymentDone: true,
+  // });
 
-  const handleAddConfig = () => {
-    setShowAddConfig(true);
-  };
+  // const handleAddConfig = () => {
+  //   setShowAddConfig(true);
+  // };
 
-  const handleDefaultConfig = () => {
-    setShowDefaultConfig(true);
-  };
-  const handleCloseModal = () => {
-    setShowAddConfig(false);
-    setShowDefaultConfig(false);
-  };
+  // const handleDefaultConfig = () => {
+  //   setShowDefaultConfig(true);
+  // };
+  // const handleCloseModal = () => {
+  //   setShowAddConfig(false);
+  //   setShowDefaultConfig(false);
+  // };
 
-  const handleJourneyCountChange = (count) => {
-    setSelectedJourneyCount(count);
-  };
+  // const handleJourneyCountChange = (count) => {
+  //   setSelectedJourneyCount(count);
+  // };
 
-  const handleEventFilterChange = (event) => {
-    const { name, checked } = event.target;
-    setEventFilters({
-      ...eventFilters,
-      [name]: checked,
-    });
-  };
+  // const handleEventFilterChange = (event) => {
+  //   const { name, checked } = event.target;
+  //   setEventFilters({
+  //     ...eventFilters,
+  //     [name]: checked,
+  //   });
+  // };
 
   // return (
   //   <>
@@ -251,80 +251,62 @@ const NewConfigurationButton = () => {
   //   </>
   // );
 
-
   const AccountInfo = () => {
+    const projectID = localStorage.getItem("KT_ID");
+    const apiKey = localStorage.getItem("KT_TOKEN");
 
-    const jsonData = `{
-      "projectID": ${localStorage.getItem("KT_ID")},
-      "apiKey": ${localStorage.getItem("KT_TOKEN")},
-    }`.trim();
+    const jsonData = `"projectID": ${projectID},\n\n"apiKey": ${apiKey}`;
 
     return (
       <>
-        <div style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-evenly"
-        }}>
-          <div style={{
-            display: "flex",
-            flexDirection: "column"
-          }}>
-            <div className=" mb-2">
-              <h6>Install</h6>
-              <span>use this command to install the sdk</span>
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h6 className="card-title">Install</h6>
+                  <p className="card-text">
+                    Use this command to install the SDK.
+                  </p>
+                  <pre>
+                    <code>npm i kap-spk</code>
+                  </pre>
+                </div>
+              </div>
             </div>
-            <div>  <pre>
-              <code>
-                npm i kap-spk
-              </code>
-            </pre></div>
-          </div>
-          <div style={{
-            // width:"200px",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden"
-            // flexWrap:"wrap"
-          }}>
-            <div className=" mb-2">
-              <h6>Auth Token</h6>
-              <span>use this Token in  sdk</span>
+            <div className="col-md-6">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h6 className="card-title">Auth Token</h6>
+                  <p className="card-text">Use this Token in SDK.</p>
+                  <pre>
+                    <code>{jsonData}</code>
+                  </pre>
+                </div>
+              </div>
             </div>
-            <div>  <pre>
-              <code>
-                {
-                  jsonData
-                }
-              </code>
-            </pre></div>
           </div>
         </div>
       </>
-
-
-    )
-  }
+    );
+  };
 
   return (
     <>
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-2">
         <div className="d-block mb-4 mb-md-0">
           <h4>Account Info</h4>
         </div>
       </div>
       <AccountInfo />
 
-
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-2">
         <div className="d-block mb-4 mb-md-0">
           <h4>Agent Info</h4>
           <p className="mb-0">Agent activity dashboard.</p>
         </div>
-
       </div>
       <AgentTable />
-
     </>
   );
 };

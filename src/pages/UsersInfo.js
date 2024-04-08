@@ -25,11 +25,9 @@ export default () => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-block mb-4 mb-md-0">
-
-          <h4>Users Info</h4>
-          <p className="mb-0">User activity dashboard.</p>
+          <h4>All Users</h4>
+          <p className="mb-0">Click on user to see it's journey.</p>
         </div>
-
       </div>
 
       <div className="table-settings mb-4">

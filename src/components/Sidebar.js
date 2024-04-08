@@ -27,7 +27,7 @@ import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 import { getAuthToken } from "../utils/genral.function";
 
 export default (props = {}) => {
-  const userType = getAuthToken("usertype")
+  const userType = getAuthToken("usertype");
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -178,20 +178,11 @@ export default (props = {}) => {
                 image={ReactHero}
               />
 
-                <NavItem
-                  title="UsersInfo"
-                  icon={faUser}
-                  link={"/"}
-                />
+              <NavItem title="Timeline" icon={faUser} link={"/"} />
 
-                {userType === "A" && (
-
-              <NavItem
-                title="Configuration"
-                icon={faCog}
-                link={"/Configuration"}
-              />
-                )}
+              {userType === "A" && (
+                <NavItem title="Setting" icon={faCog} link={"/Configuration"} />
+              )}
               {/* <NavItem
                 title="Transactions"
                 icon={faHandHoldingUsd}
