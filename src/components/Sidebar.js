@@ -24,8 +24,10 @@ import { Link } from "react-router-dom";
 import { Routes } from "../routes";
 import ReactHero from "../assets/img/icons/favi.png";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
+import { getAuthToken } from "../utils/genral.function";
 
 export default (props = {}) => {
+  const userType = getAuthToken("usertype")
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -181,11 +183,15 @@ export default (props = {}) => {
                   icon={faUser}
                   link={"/"}
                 />
+
+                {userType === "A" && (
+
               <NavItem
                 title="Configuration"
                 icon={faCog}
                 link={"/Configuration"}
               />
+                )}
               <NavItem
                 title="Transactions"
                 icon={faHandHoldingUsd}

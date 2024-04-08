@@ -91,9 +91,10 @@ export default () => {
   useEffect(()=>{
     const auth = localStorage.getItem("KT_ID") && localStorage.getItem("KT_TOKEN") && localStorage.getItem("KT_UT")
     if(auth){
-      history.replace("/")
+      history.push("/")
+    }else{
+      history.push(Routes.Signup.path)
     }
-    history.replace(Routes.Signup.path)
 
   },[history])
 

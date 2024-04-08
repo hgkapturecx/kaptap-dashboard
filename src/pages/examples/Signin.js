@@ -48,21 +48,6 @@ export default () => {
     });
   };
 
-  const defaultProjectID = () => { 
-    const projectID = getAuthToken("projectID")
-
-    if(projectID){
-      return {
-        defaultValue:projectID,
-        disabled:true
-      }
-    }else{
-      return {}
-    }
-  }
-
-
-
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -92,8 +77,7 @@ export default () => {
                     <Form.Control
                       required
                       placeholder="Project Name"
-                      value={projectID}
-                      {...defaultProjectID()}
+                      value={projectID}                      
                       onChange={(e) => setprojectID(e.target.value)}
                     />
                   </Form.Group>
