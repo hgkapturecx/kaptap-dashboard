@@ -15,29 +15,46 @@ import fetchController from "../services/fetchControler";
 const AgentTable = () => {
   const [agentData, setAgentData] = useState([]);
   const [clientData, setClientData] = useState([]);
+  const [configData, setConfigData] = useState({
+    hidejoureny: []
+  })
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isclientLoading, setIsclientLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [agentConfigPop, setAgentConfigPop] = useState(false);
 
   useEffect(() => {
     fetchagentData();
-    fetchclientData();
   }, []);
 
+
+  useEffect(() => {
+    if (Boolean(agentConfigPop)) {
+      fetchclientData()
+    }
+  }, [agentConfigPop])
+
   const fetchclientData = async () => {
-    setIsLoading(true);
-    fetchController("/client-info", {})
-      .then((res) => {
-        setClientData(res?.data);
-        setIsclientLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching clientData:", error);
-        setIsclientLoading(false);
-      });
-  };
+    setIsclientLoading(true);
+    try {
+      fetchController("/client-info", {})
+
+        .then((res) => {
+          setClientData(res?.data);
+          setIsclientLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching clientData:", error);
+          setIsclientLoading(false);
+        });
+    } catch (error) {
+      alert(error);
+      setIsclientLoading(false);
+      console.error("Error fetching agentData:", error);
+    }
+  }
+
 
   const fetchagentData = async () => {
     setIsLoading(true);
@@ -102,60 +119,30 @@ const AgentTable = () => {
     setAgentConfigPop(false);
   };
 
-  const AgentModel = () => {
-    return (
-      <Modal show={Boolean(agentConfigPop)} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Configuration</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {isclientLoading ? (
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ minHeight: "200px" }}
-            >
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          ) : (
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Event Filters</Form.Label>
 
-                {clientData?.events?.map((_event) => {
-                  return (
-                    <Form.Check
-                      type="checkbox"
-                      label={_event?.name}
-                      // name="login"
-                      checked={true}
-                      disabled
-                    />
-                  );
-                })}
-                {/* <Form.Check
-                type="checkbox"
-                label="Login Event"
-                name="login"
-                checked={eventFilters.login}
-                onChange={handleEventFilterChange}
-              /> */}
-              </Form.Group>
-            </Form>
-          )}
-        </Modal.Body>
-        {/* <Modal.Footer>
-         <Button variant="secondary" onClick={handleCloseModal}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Save changes
-          </Button> 
-        </Modal.Footer> */}
-      </Modal>
-    );
+  const handleAddConfig = (name) => {
+    setConfigData(prevState => {
+      const updatedHideJourney = [...prevState.hidejoureny];
+      if (updatedHideJourney.includes(name)) {
+          return {
+              ...prevState,
+              hidejoureny: updatedHideJourney.filter(item => item !== name)
+          };
+      } else {
+          return {
+              ...prevState,
+              hidejoureny: [...updatedHideJourney, name]
+          };
+      }
+  });
   };
+
+  const handleSubmitConfig = () => {
+    const config = JSON.stringify(configData)
+    localStorage.setItem("KT_CONFIG", config)
+    setAgentConfigPop(false);
+  }
+
 
   return (
     <div>
@@ -191,7 +178,48 @@ const AgentTable = () => {
           )}
         </Card.Body>
       </Card>
-      <AgentModel />
+
+      {Boolean(agentConfigPop) && (
+        <Modal show={Boolean(agentConfigPop)} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Configuration</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {isclientLoading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "200px" }}
+              >
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>Event Filters</Form.Label>
+                  {clientData?.events?.map((_event) => {
+                    return (
+                      <Form.Check
+                        type="checkbox"
+                        label={_event?.name}
+                        checked={configData.hidejoureny.includes(_event?.name)}
+                        onChange={() => handleAddConfig(_event?.name)} // Wrap handleAddConfig inside an arrow function
+                      />
+
+                    );
+                  })}
+                </Form.Group>
+              </Form>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+
+            <Button variant="primary" onClick={handleSubmitConfig}>
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Modal>)}
     </div>
   );
 };

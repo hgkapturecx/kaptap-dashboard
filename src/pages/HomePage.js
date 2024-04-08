@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { Routes } from "../routes";
-import { getAuthToken, isAuthenticated } from "../utils/genral.function";
 // pages
 // import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
-import ForgotPassword from "./examples/ForgotPassword";
-import ResetPassword from "./examples/ResetPassword";
-import Lock from "./examples/Lock";
-import NotFoundPage from "./examples/NotFound";
-import ServerError from "./examples/ServerError";
+
 
 // components
 import Sidebar from "../components/Sidebar";
@@ -106,6 +101,7 @@ export default () => {
       <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
 
       <RouteWithSidebar exact path={"/"} component={UsersInfo} />
+      {/* timeline */}
 
       <RouteWithSidebar
         exact

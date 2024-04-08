@@ -177,8 +177,9 @@ export default (props = {}) => {
                 // link={Routes.Presentation.path}
                 image={ReactHero}
               />
+              <NavItem title="User Dashboard" icon={faUser} link={"/"} />
 
-              <NavItem title="Timeline" icon={faUser} link={"/"} />
+              {/* <NavItem title="Timeline" icon={faUser} link={"/timeline"} /> */}
 
               {userType === "A" && (
                 <NavItem title="Setting" icon={faCog} link={"/Configuration"} />
