@@ -116,7 +116,7 @@ const AgentTable = () => {
                                     <th className="border-bottom">Email</th>
                                     <th className="border-bottom">Password</th>
                                     <th className="border-bottom">Created At</th>
-                                    <th className="border-bottom">Config</th>
+                                    {/* <th className="border-bottom">Config</th> */}
                                 </tr>
                             </thead>
                             <tbody>
